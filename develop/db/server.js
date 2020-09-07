@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const localJson = require('./db.json');
+const localJson = require('db.json');
 const { notDeepStrictEqual } = require('assert');
 
 
