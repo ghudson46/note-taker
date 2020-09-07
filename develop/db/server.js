@@ -6,7 +6,7 @@ const localJson = require("./db.json")
 
 // Setting Up Server
 const app = express();
-const PORT = 4567;
+const PORT = 8000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
