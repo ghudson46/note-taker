@@ -2,12 +2,19 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const localJson = require('./db.json');
+const { notDeepStrictEqual } = require('assert');
+
+
 const app = express();
 const PORT = 3060;
 
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+
+// static middleware
+app.use(express.static("../public"));
 
 // creates body for json data
 var notes = [
@@ -17,7 +24,7 @@ var notes = [
   }
 ];
 
-// Routes
+// HTML Routes
 app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, "notes.html"));
 });
@@ -26,12 +33,24 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+
+// API Routes
+
 app.get('/api/notes', (req, res) => {
+  res.json(localJson);
   // Should read the `db.json` file and return all saved notes as JSON.
 });
 
 app.post('/api/notes', (req, res) => {
+  notes.push(req.body);
+  res.json(true);
   // Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+});
+
+fs.appendFile("../db.json", JSON.stringify(notes), (err) => {
+  if (err) {
+    console.log(err);
+  }
 });
 
 app.delete('/api/notes/:id', (req, res) => {
