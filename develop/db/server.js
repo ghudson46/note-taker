@@ -36,6 +36,16 @@ app.post("/api/notes", function(req, res) {
     res.json(true);
   });
 
+  app.delete("/api/notes/:id", (req, res) => {
+    const noteId = req.params.id;
+    if (!notes[noteId]) {
+      res.status(404).send('note with that ID does not exist');
+    } else {
+      notes[noteId] = null;
+      res.status(204).send();
+    }
+  });
+
 fs.appendFile("../db.json", JSON.stringify(noteArr), function(err){
   if (err) console.log(err);
 })
