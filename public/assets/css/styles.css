@@ -8,6 +8,14 @@ h1 {
   text-align: center;
 }
 
+a {
+  cursor: pointer;
+}
+
+.api-link {
+  background-color: aquamarine;
+}
+
 .save-note {
   display: none;
 }

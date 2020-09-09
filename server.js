@@ -1,13 +1,11 @@
-const express = require('express');
 // dependencies
-const app = express();
+const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { Console } = require('console');
 
+const app = express();
 const PORT = process.env.PORT || 4001;
 
-const db = require('./db/db.json');
 
 // note array
 let noteArray = JSON.parse(fs.readFileSync(`${__dirname}/db/db.json`));
@@ -25,13 +23,12 @@ app.get('/notes', (req, res) => {
 
 // returns db.json 
 app.get("/api/notes", function(req, res) {
-  // try {
-  //     res.end(JSON.stringify(noteArray));
-  // } catch (err) {
-  //     console.log(err);
-  //     res.end(err);
-  // }    
-  res.send(db);
+    try {
+      res.end(JSON.stringify(noteArray));
+    } catch (err) {
+      console.log(err);
+      res.end(err);
+    }    
 });
 
 app.delete('/api/notes/:id', (req, res) => {
@@ -55,8 +52,11 @@ app.post('/api/notes', (req, res) => {
   noteArray.push(newNote);
 
   fs.writeFile(`${__dirname}/db/db.json`, JSON.stringify(noteArray), err => {
-    if (err) throw err;
-    res.json(noteArray);
+    if (err) {
+      throw err;
+    } else {
+      res.json(noteArray); 
+    }
   })
 
   console.log(noteArray);
