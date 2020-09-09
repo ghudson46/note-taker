@@ -7,6 +7,8 @@ const { Console } = require('console');
 
 const PORT = process.env.PORT || 4001;
 
+const db = require('./db/db.json');
+
 // note array
 let noteArray = JSON.parse(fs.readFileSync(`${__dirname}/db/db.json`));
 console.log(noteArray);
@@ -14,7 +16,7 @@ console.log(noteArray);
 // sets up the express application to handle data parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-
+app.use(express.static("public"));
 
 // notes.html route
 app.get('/notes', (req, res) => {
@@ -23,28 +25,27 @@ app.get('/notes', (req, res) => {
 
 // returns db.json 
 app.get("/api/notes", function(req, res) {
-  try {
-      res.end(JSON.stringify(noteArray));
-  } catch (err) {
-      console.log(err);
-      res.end(err);
-  }    
+  // try {
+  //     res.end(JSON.stringify(noteArray));
+  // } catch (err) {
+  //     console.log(err);
+  //     res.end(err);
+  // }    
+  res.send(db);
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-// deletes notes by ID
-let noteId = req.params.id;
-
-
+  let id = req.params.id;
+  console.log(id);
 });
 
 app.post('/api/notes', (req, res) => {
   // adds new note to db.json
   let newNote = req.body;
 
-  noteArray.push(newNotes);
+  noteArray.push(newNote);
 
-  res.writeFile(`${__dirname}/db/db.json`, JSON.stringify(noteArray), err => {
+  fs.writeFile(`${__dirname}/db/db.json`, JSON.stringify(noteArray), err => {
     if (err) throw err;
     res.json(noteArray);
   })
