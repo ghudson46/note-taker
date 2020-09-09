@@ -35,8 +35,12 @@ app.get("/api/notes", function(req, res) {
 });
 
 app.delete('/api/notes/:id', (req, res) => {
-  let id = req.params.id;
-  console.log(id);
+  const noteId = req.params.id;
+
+  noteArray.splice(noteId, 1);
+
+  console.log(noteArray);
+  
 });
 
 app.post('/api/notes', (req, res) => {
@@ -49,6 +53,8 @@ app.post('/api/notes', (req, res) => {
     if (err) throw err;
     res.json(noteArray);
   })
+
+  console.log(noteArray);
 });
 
 // index.html route
