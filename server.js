@@ -40,6 +40,11 @@ app.delete('/api/notes/:id', (req, res) => {
   noteArray.splice(noteId, 1);
 
   console.log(noteArray);
+
+  fs.writeFileSync(path.resolve(`${__dirname}/db/db.json`), JSON.stringify(noteArray));
+
+  res.status(200).json(noteArray);
+  console.log(`note deleted successfully`);
   
 });
 
