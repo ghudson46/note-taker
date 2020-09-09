@@ -4,6 +4,10 @@ html, body {
   padding: 0;
 }
 
+h1 {
+  text-align: center;
+}
+
 .save-note {
   display: none;
 }
