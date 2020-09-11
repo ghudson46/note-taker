@@ -7,6 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 4001;
 
 
+
 // note array
 let noteArray = JSON.parse(fs.readFileSync(`${__dirname}/db/db.json`));
 console.log(noteArray);
